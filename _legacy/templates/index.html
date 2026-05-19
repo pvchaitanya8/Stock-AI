@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Stock Price Prediction</title>
+  
+  <style>
+    .glass-background {
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px); 
+      padding: 4px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .contribution-row {
+      display: flex;
+      justify-content: center;
+    }
+    .contribution-row span {
+      margin: 0 100px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #e1e1e1;
+      background-image: url('static/default.jpg');
+      background-attachment:fixed;
+      background-repeat: repeat;
+      background-size: cover;
+      transition: background-image 0.5s cubic-bezier(0.25,0.1,0.25,1);
+    }
+
+    h1 {
+      text-align: center;
+      letter-spacing: 3px;
+        color: white;
+      transition: all 1s;
+      text-shadow: 1px 1px 2px rgb(255, 255, 255), 0 0 1em black, 0 0 0.2em rgb(37, 36, 36);
+    }
+    h1:hover {
+        backdrop-filter: blur(5px); 
+        text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 1em rgb(255, 255, 255), 0 0 0.2em rgb(0, 0, 0);
+        transform: scale(1.12);
+        transition: all 1s;
+    }
+    
+    h2 {
+      text-align: center;
+      letter-spacing: 3px;
+        color: white;
+      transition: all 1s;
+      text-shadow: 1px 1px 2px rgb(255, 255, 255), 0 0 1em black, 0 0 0.2em rgb(37, 36, 36);
+      margin-top: 7%;
+    }
+    h2:hover {
+        backdrop-filter: blur(5px); 
+        text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 1em rgb(255, 255, 255), 0 0 0.2em rgb(0, 0, 0);
+        transition: all 1s;
+    }
+
+
+
+    .pop{
+      transition: all 1.1s;
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 400px;
+      width: 1000px;
+      display: flex;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      align-items: center;
+      justify-content: center;
+    }
+    .pop:hover{
+      color:rgb(227, 227, 227);
+      transition: all 1s;
+      background-color: rgba(56, 56, 56, 0.5);
+      box-shadow:0px 1px 30px #000000;
+      transform: scale(1.0004);
+    }
+
+    form{
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    select,
+    input[type="number"] {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      padding: 10px;
+      transition: all 1s;
+      background-color: #344b97;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    input[type="submit"]:hover {
+      background-color: #4CAF50;
+      transform: scale(0.9);
+      transition: all 1s;
+    }
+
+    eff :hover {
+        text-shadow: 1px 1px 2px rgb(255, 255, 255), 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
+        color: white; 
+        transition: all 1s;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(3, 2fr);
+        grid-gap: 10px;
+        margin: 25px;
+    }
+
+    .image-box {
+      position: relative;
+      display: inline-block;
+      width: 100%;  
+      height: 0;
+      padding-bottom: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transition: all 0.3s ease-in-out;
+      border-radius: 10px;
+    }
+    .image-box:hover {
+      transform: scale(1.2);
+    }
+
+    .image-box:hover .text-box {
+      opacity: 1;
+      border-radius: 10px;
+      background-color: rgba(45, 45, 45, 0.5);
+      backdrop-filter: blur(10px); 
+    }
+    .text-box {
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    img {
+      transition: all 0.8s;
+      text-align: left;
+      box-shadow:0px 1px 10px #000000;
+      border-radius: 10px;
+      margin-right: 15%;
+    }
+
+    img:hover {
+      transition: all 1s;
+      box-shadow:0px 1px 30px #000000;
+      transform: scale(2);  
+    } 
+    pop .text {
+      margin-left: 20px;
+    }
+
+  </style>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const companySelect = document.getElementById('company');
+      const body = document.body;
+
+      companySelect.addEventListener('change', () => {
+        const selectedCompany = companySelect.value;
+        body.style.backgroundImage = `url('static/${selectedCompany.toLowerCase()}.jpg')`;
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <h1 style="font-size:4vw">Stock Price Prediction</h1>
+
+  {% if output_data == "" %}
+  <form method="POST" action="/predict">
+    <label for="company">Company:</label>
+    <select id="company" name="company">
+      <option value="default">Select Company</option>
+      <option value="Apple">Apple</option>
+      <option value="Cisco">Cisco</option>
+      <option value="CocaCola">CocaCola</option>
+      <option value="Google">Google</option>
+      <option value="IBM">IBM</option>
+      <option value="Intel">Intel</option>
+      <option value="JPMorgan">JPMorgan</option>
+      <option value="Microsoft">Microsoft</option>
+      <option value="McDonalds">McDonalds</option>
+      <option value="Nike">Nike</option>
+      <option value="Verizon">Verizon</option>
+      <option value="Visa">Visa</option>
+      <option value="Walmart">Walmart</option>
+      <option value="Disney">Disney</option>
+    </select>
+
+    <label for="opening">Opening Price:</label>
+    <input type="number" step="any" id="opening" name="opening" required>
+
+    <label for="high">High Price:</label>
+    <input type="number" step="any" id="high" name="high" required>
+
+    <label for="low">Low Price:</label>
+    <input type="number" step="any" id="low" name="low" required>
+
+    <label for="volume">Volume:</label>
+    <input type="number" step="any" id="volume" name="volume" required>
+
+    <input type="submit" value="Predict">
+  </form>
+
+  {% else %}
+  <div class="pop">
+    <img src="static/plot.png" alt="Graph of stock" width="450" height="300" >
+
+    <div class="text">
+      
+      <h5 style="margin-left: -13%; margin-top: -2%; font-size: 65px;">Company</h5>
+      <h5 style="margin-left:20%; font-size: 28px;margin-top:-30%;">{{output_data.company}}</h5>
+      <h4 style="margin-left: 0%;font-size: 20px;margin-top: -7%;">Predicted closing price :</h4>
+      <h4 style="margin-left: 5%;font-size: 21px;font-weight: 780;">{{output_data.prediction}}</h4>
+      <h4 style="font-size: 20px;">For Inputs&nbsp;:</h4>
+      <h5 style="margin-top: -3%;  text-align: center;font-size: 17px;margin-right: 10%;">Open value : {{output_data.inputs[0]}}<br>High value : {{output_data.inputs[1]}}<br> Low value : {{output_data.inputs[2]}}<br> Volume : {{output_data.inputs[3]}}</h5>
+
+    </div>
+  </div>
+  {% endif %}
+  
+  <h1 style="font-size:3vw">Info</h1>
+  
+  <div class="container">
+    <div class="image-box" style="background-image: url('static/stock.jpg')">
+      <div class="text-box">
+        <p>The stock market is a platform where investors buy and sell shares of publicly traded companies. It represents the overall activity of buying, selling, and trading stocks, which are units of ownership in a company. The stock market provides a marketplace for investors to trade securities, such as stocks, bonds, and derivatives. It serves as a mechanism for companies to raise capital by issuing stocks, while investors can profit from price appreciation and dividends. Stock markets are typically regulated and provide a transparent environment for trading and investing in securities.</p>
+      </div>
+    </div>
+
+    <div class="image-box" style="background-image: url('static/high.jpg')">
+      <div class="text-box">
+        <p>The high price, in the context of the stock market, refers to the highest price at which a particular security (such as a stock) has traded during a specific time period, usually within a trading day. It represents the peak level of value that buyers were willing to pay for the security within that timeframe. The high price is an important metric for investors and traders as it can indicate the level of demand and the overall market sentiment towards a particular stock. It is often compared to other price indicators, such as the low price and the closing price, to assess market trends and potential trading opportunities.</p>
+      </div>
+    </div>
+
+    <div class="image-box" style="background-image: url('static/low.jpg')">
+      <div class="text-box">
+        <p>The low price, in the context of the stock market, refers to the lowest price at which a particular security (such as a stock) has traded during a specific time period, typically within a trading day. It represents the nadir of value that buyers were willing to pay for the security within that timeframe. The low price is an important metric for investors and traders as it can indicate the level of selling pressure and the overall market sentiment towards a particular stock. It is often compared to other price indicators, such as the high price and the closing price, to assess market trends and potential trading opportunities.</p>
+      </div>
+    </div>
+
+    <div class="image-box" style="background-image: url('static/volume.jpg')">
+      <div class="text-box">
+        <p>Volume, in the context of the stock market, refers to the total number of shares or contracts traded within a given period. It represents the amount of activity or liquidity in a particular security or the overall market. Volume is typically expressed as the number of shares or contracts traded during a specific time frame, such as a trading day or a specific interval within a day. High volume indicates a higher level of market participation and interest in a security, while low volume suggests lower trading activity. Volume is an important factor for investors and traders as it can provide insights into market trends, price movements, and liquidity.</p>
+      </div>
+    </div>
+
+    <div class="image-box" style="background-image: url('static/open.jpg')">
+      <div class="text-box">
+        <p>The opening price, in the context of the stock market, refers to the price at which a particular security (such as a stock) trades when the market opens for trading. It is the first traded price of the day and sets the initial benchmark for the security's value. The opening price is determined by various factors, including the previous day's closing price, pre-market trading activity, and market sentiment. It is an important reference point for investors and traders as it can influence trading decisions and serve as a basis for analyzing price movements throughout the trading day.</p>
+      </div>
+    </div>
+
+    <div class="image-box" style="background-image: url('static/close.jpg')">
+      <div class="text-box">
+        <p>The closing price, in the context of the stock market, refers to the final price at which a particular security (such as a stock) trades when the market closes for the day. It is the last traded price of the trading day and is considered a crucial data point for investors and traders. The closing price is used to calculate daily price changes, assess the performance of a security, and determine various technical analysis indicators. It is also relevant for investors who follow long-term investment strategies, as they may use the closing price as a reference for portfolio valuation and decision-making.</p>
+      </div>
+    </div>  
+  </div>
+
+
+
+  <h2>Contact us</h2>
+
+  <div class="glass-background">
+    <div class="contribution-row">
+      
+      <span><eff><p><a style="text-decoration: none" href="mailto:20P31A0548@acet.ac.in">P. V. Chaitanya</a></p></eff></span>
+      
+      <span><eff><p><a style="text-decoration: none" href="mailto:20P31A0589@acet.ac.in">J. Siva Shankar</a></p></eff></span>
+      
+      <span><eff><p><a style="text-decoration: none" href="mailto:20A91A0452@aec.edu.in">T. Kishore</a></p></eff></span>    
+      
+      <span><eff><p><a style="text-decoration: none" href="mailto:20A91A0458@aec.edu.in">V. Uday Kiran</a></p></eff></span>
+    
+    </div>
+  </div>
+
+</body>
+</html>
