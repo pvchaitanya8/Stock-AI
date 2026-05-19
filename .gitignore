@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv
+venv/
+*.pt
+*.pkl
+app/saved_models/*
+!app/saved_models/.gitkeep
+app/.cache/
+.cache/
+*.log
+
+# dev-only scripts
+git_debug_home.py
