@@ -1,0 +1,370 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Stock AI V2  ·  Pencil + Graph-Paper Theme
+   Inspired by architect's drafting notebooks and Edward Tufte's restraint.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Paper & graphite */
+  --paper:        #f3efe4;
+  --paper-warm:   #ece6d4;
+  --paper-edge:   #d8d0bc;
+  --grid-fine:    rgba(110,  90,  60, 0.06);
+  --grid-major:   rgba(110,  90,  60, 0.14);
+
+  /* Ink */
+  --ink:          #2a2622;
+  --ink-soft:     #4a4540;
+  --ink-mute:     #7a7368;
+  --ink-faint:    #a39c8e;
+
+  /* Accents — colored-pencil palette */
+  --pencil-blue:  #2e4a6b;
+  --pencil-green: #3d6b3d;
+  --pencil-red:   #a83b3b;
+  --pencil-amber: #a87526;
+  --pencil-plum:  #6b3d6b;
+
+  /* Fills for the bands & charts */
+  --band-blue:    rgba( 46,  74, 107, 0.18);
+  --band-green:   rgba( 61, 107,  61, 0.10);
+  --band-red:     rgba(168,  59,  59, 0.10);
+  --band-amber:   rgba(168, 117,  38, 0.10);
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, .handwritten {
+  font-family: 'Caveat', 'Architects Daughter', cursive;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+}
+
+.serif    { font-family: 'Source Serif Pro', Georgia, serif; }
+.mono     { font-family: 'JetBrains Mono', 'Consolas', monospace; }
+.label    { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 1.4px;
+            text-transform: uppercase; color: var(--ink-mute); }
+
+/* ── Graph-paper background (fixed, applied to body) ─────────────────────── */
+body {
+  background-image:
+    /* major grid */
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    /* fine grid */
+    linear-gradient(var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-fine) 1px, transparent 1px);
+  background-size:
+    120px 120px,
+    120px 120px,
+     24px  24px,
+     24px  24px;
+  background-attachment: fixed;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+header {
+  padding: 36px 48px 22px;
+  border-bottom: 1.5px solid var(--ink-faint);
+  position: relative;
+}
+header::after {
+  /* faint second pencil stroke under main border */
+  content: '';
+  position: absolute;
+  left: 48px; right: 48px; bottom: -4px;
+  height: 1px;
+  background: var(--ink-faint);
+  opacity: 0.4;
+}
+header h1 {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+header h1 .accent { color: var(--pencil-blue); font-style: italic; }
+header h1 small  {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+.tagline {
+  margin: 4px 0 0;
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* ── Search bar ──────────────────────────────────────────────────────────── */
+.search-bar {
+  display: flex;
+  gap: 12px;
+  padding: 24px 48px;
+  align-items: center;
+}
+.search-bar input {
+  flex: 1; max-width: 380px;
+  padding: 11px 16px;
+  background: rgba(255, 252, 244, 0.6);
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 4px;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.search-bar input::placeholder { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.5px; }
+.search-bar input:focus {
+  border-color: var(--pencil-blue);
+  background: rgba(255, 252, 244, 0.95);
+}
+
+.search-bar button {
+  padding: 11px 26px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.08s, box-shadow 0.15s;
+  box-shadow: 2px 2px 0 var(--ink-faint);
+}
+.search-bar button:hover    { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink-faint); }
+.search-bar button:active   { transform: translate(1px, 1px);   box-shadow: 0 0 0 var(--ink-faint); }
+.search-bar button.secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* ── Status row ──────────────────────────────────────────────────────────── */
+.status {
+  padding: 14px 48px;
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-size: 14px;
+  min-height: 22px;
+}
+.status.error { color: var(--pencil-red); }
+.status.loading::after {
+  content: '';
+  display: inline-block;
+  width: 12px; height: 12px;
+  margin-left: 10px;
+  border: 1.5px solid var(--ink-mute);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Results layout ──────────────────────────────────────────────────────── */
+.results { padding: 0 48px 48px; }
+.results.hidden { display: none; }
+
+/* Universal "drawn on paper" card */
+.card {
+  background: rgba(255, 252, 244, 0.7);
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 4px;
+  padding: 22px 26px;
+  position: relative;
+  /* faint pencil shadow */
+  box-shadow:
+    2px 2px 0 rgba(110, 90, 60, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.03);
+}
+/* slight inner highlight that suggests pencil weight on one corner */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dotted transparent;
+  pointer-events: none;
+}
+
+/* ── Summary cards ───────────────────────────────────────────────────────── */
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.6fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.summary .card .value {
+  font-family: 'Caveat', cursive;
+  font-size: 44px;
+  line-height: 1;
+  margin: 8px 0 6px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.summary .card .sub {
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+
+/* Signal card — color shifts based on label */
+.signal-card { transition: border-color 0.2s; }
+.signal-card.buy,        .signal-card.strong-buy  { border-color: var(--pencil-green); background: linear-gradient(180deg, rgba(255,252,244,0.7), var(--band-green)); }
+.signal-card.hold                                  { border-color: var(--pencil-amber); background: linear-gradient(180deg, rgba(255,252,244,0.7), var(--band-amber)); }
+.signal-card.sell,       .signal-card.strong-sell { border-color: var(--pencil-red);   background: linear-gradient(180deg, rgba(255,252,244,0.7), var(--band-red));   }
+
+.signal-card.buy .value,        .signal-card.strong-buy .value  { color: var(--pencil-green); }
+.signal-card.hold .value                                          { color: var(--pencil-amber); }
+.signal-card.sell .value,       .signal-card.strong-sell .value { color: var(--pencil-red);   }
+
+/* ── Reasoning card ──────────────────────────────────────────────────────── */
+.reasons-card { margin-bottom: 18px; }
+.reasons-card h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: var(--pencil-blue);
+}
+.reasons-card ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.reasons-card li {
+  padding: 6px 0 6px 28px;
+  position: relative;
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed rgba(110, 90, 60, 0.18);
+}
+.reasons-card li:last-child { border-bottom: none; }
+.reasons-card li::before {
+  /* hand-drawn checkmark/dash bullet */
+  content: '→';
+  position: absolute;
+  left: 4px; top: 6px;
+  color: var(--pencil-blue);
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ── Chart cards ─────────────────────────────────────────────────────────── */
+.chart-card { margin-bottom: 18px; }
+.chart-card h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--pencil-blue);
+}
+.chart-card h3::after {
+  /* small horizontal pencil rule next to heading */
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ink-faint), transparent);
+}
+.chart-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.chart-row .half { flex: 1; margin-bottom: 0; }
+
+/* ── Indicator snapshot grid ─────────────────────────────────────────────── */
+.indicators-card h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  color: var(--pencil-blue);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.grid .cell {
+  background: rgba(255, 252, 244, 0.6);
+  border: 1px solid var(--ink-faint);
+  border-radius: 3px;
+  padding: 10px 14px;
+  position: relative;
+}
+.grid .cell::after {
+  /* tiny upper-right "pencil dot" */
+  content: '';
+  position: absolute;
+  top: 6px; right: 8px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+.grid .cell .name {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink-mute);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+.grid .cell .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 4px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+footer {
+  padding: 24px 48px 36px;
+  border-top: 1.5px solid var(--ink-faint);
+  text-align: center;
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-mute);
+  position: relative;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  left: 48px; right: 48px; top: 4px;
+  height: 1px;
+  background: var(--ink-faint);
+  opacity: 0.4;
+}
+
+/* ── Responsive nicety ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  header, .search-bar, .status, .results, footer { padding-left: 24px; padding-right: 24px; }
+  .summary       { grid-template-columns: 1fr; }
+  .chart-row     { flex-direction: column; }
+  header h1      { font-size: 38px; }
+}

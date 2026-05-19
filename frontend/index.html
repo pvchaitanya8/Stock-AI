@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock AI V2 — Forecaster's Notebook</title>
+
+  <!-- Pencil/handwritten + serif + mono trio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Architects+Daughter&family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Stock<span class="accent">AI</span><small>vol. 2 · forecaster's notebook</small></h1>
+    <p class="tagline">LSTM + Attention multi-step forecaster · MC Dropout uncertainty · composite trade signal.</p>
+  </header>
+
+  <section class="search-bar">
+    <input id="ticker" type="text" placeholder="ticker (e.g. AAPL, MSFT, TSLA, GOOGL)" autofocus />
+    <button id="analyze">Analyze</button>
+    <button id="retrain" class="secondary" title="Retrain model on latest data">Retrain</button>
+  </section>
+
+  <section id="status" class="status"></section>
+
+  <section id="results" class="results hidden">
+    <div class="summary">
+      <div class="card ticker-card">
+        <div class="label">Ticker</div>
+        <div class="value" id="ticker-display">—</div>
+        <div class="sub" id="last-date">—</div>
+      </div>
+      <div class="card price-card">
+        <div class="label">Spot Price</div>
+        <div class="value" id="current-price">—</div>
+        <div class="sub" id="pred-return">—</div>
+      </div>
+      <div class="card signal-card" id="signal-card">
+        <div class="label">Signal</div>
+        <div class="value" id="signal-label">—</div>
+        <div class="sub" id="signal-score">—</div>
+      </div>
+    </div>
+
+    <div class="card reasons-card">
+      <h3>Field Notes</h3>
+      <ul id="reasons"></ul>
+    </div>
+
+    <div class="card chart-card">
+      <h3>Price &amp; Forecast — 30 days</h3>
+      <div id="price-chart"></div>
+    </div>
+
+    <div class="chart-row">
+      <div class="card chart-card half">
+        <h3>RSI (14)</h3>
+        <div id="rsi-chart"></div>
+      </div>
+      <div class="card chart-card half">
+        <h3>MACD</h3>
+        <div id="macd-chart"></div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="card chart-card half">
+        <h3>Stochastic %K · %D</h3>
+        <div id="stoch-chart"></div>
+      </div>
+      <div class="card chart-card half">
+        <h3>ATR (14) · Volatility</h3>
+        <div id="atr-chart"></div>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h3>OBV · Volume Confirmation</h3>
+      <div id="obv-chart"></div>
+    </div>
+
+    <div class="card indicators-card">
+      <h3>Indicator Ledger</h3>
+      <div id="indicator-grid" class="grid"></div>
+    </div>
+  </section>
+
+  <footer>
+    Forecasts are AI-generated estimates with model uncertainty. Not financial advice.
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
