@@ -14,7 +14,7 @@ ta==0.11.0
 
 # ML
 torch==2.3.0
-scikit-learn==1.4.2
+scikit-learn==1.5.0
 
 # Serialization
 joblib==1.4.2
