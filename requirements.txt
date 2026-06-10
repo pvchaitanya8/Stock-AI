@@ -13,7 +13,7 @@ numpy==1.26.4
 ta==0.11.0
 
 # ML
-torch==2.3.0
+torch==2.12.0
 scikit-learn==1.4.2
 
 # Serialization
