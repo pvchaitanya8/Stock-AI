@@ -1,36 +1,50 @@
-# Stock AI · V2
+# 🪙 Stock AI
+<div align="center">
+  <img src="https://res.cloudinary.com/dwco7vfgp/image/upload/v1784465662/6_h21rs2.png" alt="SignBridge Hero Image" width="100%" />
+</div>
 
 > An interactive forecaster's notebook for individual traders.
-> Live data · LSTM + Attention · MC Dropout uncertainty · composite trade signal.
 
-A complete rewrite of the original Flask + Keras stock predictor. The first
-version asked the user to type today's OHLCV by hand, supported only 14
-hardcoded tickers, and produced a single next-day closing price. This version
-does what a trader actually needs:
+<div align="center">
+  <p>
+    <img src="https://img.shields.io/badge/Python-3.11-blue.svg" alt="Python 3.11">
+    <img src="https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi" alt="FastAPI">
+    <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white" alt="PyTorch">
+  </p>
+</div>
 
-- type **any** ticker — live data is fetched automatically
-- get a **30-day forecast** with a 10th / 90th percentile confidence band
-- read a **Buy / Hold / Sell signal** with the technical reasoning written out
-- explore interactive candlesticks and indicator panels in a hand-drawn
-  *architect's notebook* UI
 
 ---
 
-## Table of Contents
+A complete rewrite of the original Flask + Keras stock predictor. The first version asked the user to type today's OHLCV by hand, supported only 14 hardcoded tickers, and produced a single next-day closing price. 
 
-1. [What's New vs V1](#whats-new-vs-v1)
-2. [Architecture](#architecture)
-3. [Project Layout](#project-layout)
-4. [Getting Started](#getting-started)
-5. [API Reference](#api-reference)
-6. [Model Details](#model-details)
-7. [Signal Logic](#signal-logic)
-8. [Demo Guide](#demo-guide)
-9. [Disclaimer](#disclaimer)
+<div align="center">
+  <img src="https://res.cloudinary.com/dwco7vfgp/image/upload/v1784473337/1_mldbmy.png" alt="UI Screenshot Placeholder" width="800" />
+</div>
+
+**This version does what a trader actually needs:**
+- 🔍 **Any Ticker:** Live data is fetched automatically.
+- 🔮 **30-Day Forecast:** Featuring a 10th / 90th percentile confidence band.
+- 🚦 **Trade Signals:** Get a Buy / Hold / Sell signal with technical reasoning written out.
+- 🎨 **Interactive UI:** Explore candlesticks and indicator panels in a hand-drawn *architect's notebook* theme.
 
 ---
 
-## What's New vs V1
+## 📑 Table of Contents
+
+1. [✨ What's New vs V1](#-whats-new-vs-v1)
+2. [🏗️ Architecture](#️-architecture)
+3. [📂 Project Layout](#-project-layout)
+4. [🚀 Getting Started](#-getting-started)
+5. [🔌 API Reference](#-api-reference)
+6. [🧠 Model Details](#-model-details)
+7. [📊 Signal Logic](#-signal-logic)
+8. [🎯 Demo Guide](#-demo-guide)
+9. [⚠️ Disclaimer](#️-disclaimer)
+
+---
+
+## ✨ What's New vs V1
 
 | Area          | V1 (legacy)                   | **V2 (this repo)**                                                       |
 | ------------- | ----------------------------- | ------------------------------------------------------------------------ |
@@ -44,13 +58,13 @@ does what a trader actually needs:
 | Charts        | Static matplotlib PNG         | **Interactive Plotly** candlesticks + sub-panels                         |
 | Visual design | Plain Bootstrap-ish form      | **Hand-drawn graph-paper notebook** theme                                |
 
-The original V1 is preserved untouched in [`_legacy/`](./_legacy/).
+> **Note:** The original V1 is preserved untouched in [`_legacy/`](./_legacy/).
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────────┐
 │  Browser (Plotly + vanilla JS)                                   │
 └──────────────────────────────────┬───────────────────────────────┘
@@ -78,36 +92,36 @@ The original V1 is preserved untouched in [`_legacy/`](./_legacy/).
 
 ---
 
-## Project Layout
+## 📂 Project Layout
 
-```
+```text
 .
-├── app/                        FastAPI backend
-│   ├── main.py                 entry point: routes + static frontend mount
+├── app/                        # FastAPI backend
+│   ├── main.py                 # entry point: routes + static frontend mount
 │   ├── routes/
-│   │   ├── predict.py          GET  /api/predict/{ticker}
-│   │   ├── indicators.py       GET  /api/indicators/{ticker}
-│   │   └── train.py            POST /api/train/{ticker}
+│   │   ├── predict.py          # GET  /api/predict/{ticker}
+│   │   ├── indicators.py       # GET  /api/indicators/{ticker}
+│   │   └── train.py            # POST /api/train/{ticker}
 │   ├── core/
-│   │   ├── data.py             yfinance fetch + daily file cache
-│   │   ├── features.py         24 technical-analysis features
-│   │   ├── model.py            LSTM + Multi-Head Attention (PyTorch)
-│   │   ├── trainer.py          training loop + MC Dropout inference
-│   │   └── signals.py          composite Buy/Hold/Sell scoring
-│   └── saved_models/           per-ticker .pt + scaler (gitignored)
-├── frontend/                   single-page UI
+│   │   ├── data.py             # yfinance fetch + daily file cache
+│   │   ├── features.py         # 24 technical-analysis features
+│   │   ├── model.py            # LSTM + Multi-Head Attention (PyTorch)
+│   │   ├── trainer.py          # training loop + MC Dropout inference
+│   │   └── signals.py          # composite Buy/Hold/Sell scoring
+│   └── saved_models/           # per-ticker .pt + scaler (gitignored)
+├── frontend/                   # single-page UI
 │   ├── index.html
-│   ├── app.js                  Plotly charts + REST calls
-│   └── styles.css              pencil & graph-paper theme
-├── _legacy/                    untouched V1 (Flask + Keras)
-├── pretrain_demo.py            warm up models for demo tickers
+│   ├── app.js                  # Plotly charts + REST calls
+│   └── styles.css              # pencil & graph-paper theme
+├── _legacy/                    # untouched V1 (Flask + Keras)
+├── pretrain_demo.py            # warm up models for demo tickers
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -117,9 +131,9 @@ The original V1 is preserved untouched in [`_legacy/`](./_legacy/).
 
 ### 1. Clone and enter the project
 
-```powershell
+```bash
 git clone <repo-url>
-cd Stock-Price-prediction-using-LSTM-V1
+cd Stock-AI
 ```
 
 ### 2. Create and activate a virtual environment
@@ -131,8 +145,8 @@ python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
-If PowerShell blocks script execution, run once:
-`Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+> If PowerShell blocks script execution, run once:
+> `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
 
 **macOS / Linux:**
 
@@ -143,25 +157,23 @@ source venv/bin/activate
 
 ### 3. Install dependencies
 
-```powershell
+```bash
 pip install -r requirements.txt
 ```
 
 ### 4. (Optional) Pre-train demo tickers
 
-This trains AAPL, MSFT, GOOGL, and TSLA up front so the demo loads instantly.
-Expect ~10-15 minutes total on CPU.
+This trains AAPL, MSFT, GOOGL, and TSLA up front so the demo loads instantly. Expect ~10-15 minutes total on CPU.
 
-```powershell
+```bash
 python pretrain_demo.py
 ```
 
-If you skip this step, the first analysis of any ticker will train its
-model inline (2-5 minutes per ticker).
+*If you skip this step, the first analysis of any ticker will train its model inline (2-5 minutes per ticker).*
 
 ### 5. Run the server
 
-```powershell
+```bash
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
@@ -169,9 +181,13 @@ Open <http://127.0.0.1:8000> in your browser.
 
 The interactive API explorer lives at <http://127.0.0.1:8000/docs>.
 
+<div align="center">
+  <img src="https://res.cloudinary.com/dwco7vfgp/image/upload/v1784473337/2_tzyvdr.png" alt="API Docs Placeholder" width="600" />
+</div>
+
 ---
 
-## API Reference
+## 🔌 API Reference
 
 ### `GET /health`
 
@@ -183,8 +199,7 @@ Liveness check.
 
 ### `POST /api/train/{ticker}?refresh=false`
 
-Train or retrain a model. Pass `?refresh=true` to invalidate the cached
-yfinance data and force a fresh download.
+Train or retrain a model. Pass `?refresh=true` to invalidate the cached yfinance data and force a fresh download.
 
 ```json
 { "status": "ok", "ticker": "MSFT", "epochs": 29, "best_val_loss": 0.007222 }
@@ -192,8 +207,7 @@ yfinance data and force a fresh download.
 
 ### `GET /api/predict/{ticker}`
 
-Returns forecast, indicator snapshot, and signal. Returns `409` if the model
-has not been trained for that ticker yet.
+Returns forecast, indicator snapshot, and signal. Returns `409` if the model has not been trained for that ticker yet.
 
 ```json
 {
@@ -201,12 +215,11 @@ has not been trained for that ticker yet.
   "current_price": 415.32,
   "last_date": "2026-05-18",
   "forecast": [
-    { "date": "2026-05-19", "low": 408.1, "median": 419.7, "high": 432.4 },
-    /* …29 more rows… */
+    { "date": "2026-05-19", "low": 408.1, "median": 419.7, "high": 432.4 }
   ],
   "indicators": {
     "rsi": 58.4, "macd": 1.23, "macd_signal": 0.98, "macd_diff": 0.25,
-    "macd_cross": "bullish", "bb_pband": 0.62, "ema_50": 410.1, /* … */
+    "macd_cross": "bullish", "bb_pband": 0.62, "ema_50": 410.1
   },
   "signal": {
     "signal": "BUY",
@@ -223,39 +236,35 @@ has not been trained for that ticker yet.
 
 ### `GET /api/indicators/{ticker}?days=180`
 
-Returns the last `days` of OHLCV plus every indicator, used to render the
-historical portion of the charts.
+Returns the last `days` of OHLCV plus every indicator, used to render the historical portion of the charts.
 
 ---
 
-## Model Details
+## 🧠 Model Details
 
 | Hyperparameter        | Value             |
 | --------------------- | ----------------- |
-| Architecture          | LSTM + MHA + MLP  |
-| LSTM layers           | 3                 |
-| Hidden dim            | 256               |
-| Attention heads       | 4                 |
-| Lookback window       | 60 days           |
-| Forecast horizon      | 30 days           |
-| Input features        | 24                |
-| Dropout (active in inference) | 0.2       |
-| Loss                  | Huber             |
-| Optimizer             | Adam (lr 1e-3)    |
-| LR scheduler          | ReduceLROnPlateau |
-| Early-stopping patience | 15 epochs       |
-| MC Dropout samples    | 200               |
+| **Architecture**      | LSTM + MHA + MLP  |
+| **LSTM layers**       | 3                 |
+| **Hidden dim**        | 256               |
+| **Attention heads**   | 4                 |
+| **Lookback window**   | 60 days           |
+| **Forecast horizon**  | 30 days           |
+| **Input features**    | 24                |
+| **Dropout** (active in inference) | 0.2   |
+| **Loss**              | Huber             |
+| **Optimizer**         | Adam (lr 1e-3)    |
+| **LR scheduler**      | ReduceLROnPlateau |
+| **Early-stopping patience** | 15 epochs   |
+| **MC Dropout samples**| 200               |
 
 **Features (24):** Open, High, Low, Close, Volume, RSI(14), MACD line / signal / histogram, Bollinger upper / lower / mid / %B, EMA 20 / 50 / 200, Stochastic %K / %D, ATR(14), OBV, day-of-week sin/cos, month sin/cos.
 
-**Uncertainty:** dropout layers remain active at inference; 200 forward passes
-yield a distribution of forecasts, from which the 10th / 50th / 90th
-percentiles produce the dashed median line and shaded band visible in the
-chart.
+**Uncertainty:** Dropout layers remain active at inference; 200 forward passes yield a distribution of forecasts, from which the 10th / 50th / 90th percentiles produce the dashed median line and shaded band visible in the chart.
 
 ---
 
-## Signal Logic
+## 📊 Signal Logic
 
 A composite score is computed from five weighted criteria:
 
@@ -278,29 +287,48 @@ A composite score is computed from five weighted criteria:
 | −1 to −2        | SELL             |
 | ≤ −3            | **STRONG SELL**  |
 
-The price-vs-EMA-50-vs-EMA-200 ordering adds a confirmation line to the
-reasoning but does not move the score.
+> The price-vs-EMA-50-vs-EMA-200 ordering adds a confirmation line to the reasoning but does not move the score.
 
 ---
 
-## Demo Guide
+## 🎯 Demo Guide
 
 Suggested flow once the server is running:
 
-1. **MSFT** → typically lands on BUY with healthy upside → shows the green
-   signal card, candlestick + Bollinger band + EMA overlay, dashed blue
-   forecast median, shaded confidence band.
-2. **GOOGL** → swings to STRONG SELL (red) → demonstrates that the same
-   pipeline produces dramatically different recommendations.
-3. **AAPL** → STRONG SELL on overbought RSI — useful to talk through the
-   "Field Notes" reasoning list.
-4. **Any fresh ticker (e.g. NVDA)** → demonstrates the live training flow
-   (the "Sketching a model…" loading state takes 2-5 minutes).
+1. **MSFT** → typically lands on BUY with healthy upside → shows the green signal card, candlestick + Bollinger band + EMA overlay, dashed blue forecast median, shaded confidence band.
+2. **GOOGL** → swings to STRONG SELL (red) → demonstrates that the same pipeline produces dramatically different recommendations.
+3. **AAPL** → STRONG SELL on overbought RSI — useful to talk through the "Field Notes" reasoning list.
+4. **Any fresh ticker (e.g. NVDA)** → demonstrates the live training flow (the "Sketching a model…" loading state takes 2-5 minutes).
+
+<div align="center">
+  <img src="https://res.cloudinary.com/dwco7vfgp/image/upload/v1784473337/3_hrbhvb.png" alt="Demo Screenshot Placeholder" width="800" />
+</div>
 
 ---
 
-## Disclaimer
+## ⚠️ Disclaimer
 
-Forecasts are AI-generated estimates with inherent model uncertainty.
-The information here is for educational and research purposes only and is
-**not financial advice**.
+Forecasts are AI-generated estimates with inherent model uncertainty. 
+The information here is for educational and research purposes only and is **not financial advice**.
+
+---
+
+## 💖 Support
+
+Consider supporting by:
+
+<p align="center">
+  <a href="https://patreon.com/Chaitanya888"><img src="https://img.shields.io/badge/Patreon-FF424D?style=for-the-badge&logo=patreon&logoColor=white" alt="Patreon" /></a>
+  &nbsp;
+  <a href="https://buymeacoffee.com/chaitanya888"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy Me a Coffee" /></a>
+</p>
+
+<br/>
+
+---
+
+
+## 📜 License
+Distributed under the Apache-2.0 License. See [LICENSE](./LICENSE) for more information.
+
+---
